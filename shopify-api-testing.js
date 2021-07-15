@@ -1,16 +1,17 @@
+require('dotenv').config();
 const fetch = require('node-fetch');
 
-const apiPassword = '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';
 const apiVersion = '2021-07';
 const shopifyStoreUrl = 'https://matts-goods-demo.myshopify.com/admin/api/';
 
+console.log(process.env.API_KEY);
 
 async function getData(url = '') {
     const response = await fetch(url, {
         method: 'GET',
         headers: {
         'Content-Type': 'application/json',
-        'X-Shopify-Access-Token': apiPassword 
+        'X-Shopify-Access-Token': process.env.API_KEY
         } 
     });
     return response.json()
