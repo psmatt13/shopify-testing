@@ -4999,3 +4999,6 @@ node_modules/safer-buffer/Readme.md
 node_modules/safer-buffer/safer.js
 node_modules/safer-buffer/tests.js
 package.json
+node_modules
+.env
+jsconfig.json
