@@ -6,7 +6,6 @@ const fetch = require('node-fetch');
 const apiVersion = '2021-07';
 const shopifyStoreUrl = 'https://matts-goods-demo.myshopify.com/admin/api/';
 
-console.log(process.env.API_KEY);
 
 // Generic GET function to call the Shopify API
 async function getData(url = '') {
@@ -16,6 +15,19 @@ async function getData(url = '') {
         'Content-Type': 'application/json',
         'X-Shopify-Access-Token': process.env.API_KEY
         } 
+    });
+    return response.json()
+}
+
+// Generic POST function to call the Shopify API
+async function postData(url = '', postBody = {}) {
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json',
+        'X-Shopify-Access-Token': process.env.API_KEY
+        } ,
+        body: JSON.stringify(postBody)
     });
     return response.json()
 }
@@ -62,12 +74,57 @@ function getOrderById(orderId) {
         .then(data => console.log(JSON.stringify(data, null, 2)))
 }
 
+// POST a new order
+function createNewOrder(newOrder) {
+    var createOrderURL = shopifyStoreUrl + apiVersion + "/orders.json";
+    postData(createOrderURL, newOrder)
+        .then(data => console.log(JSON.stringify(data, null, 2)))
+}
+
+// POST a new customer
+function createNewCustomer(newCustomer) {
+    var createCustomerURL = shopifyStoreUrl + apiVersion + "/customers.json";
+    postData(createCustomerURL, newCustomer)
+        .then(data => console.log(JSON.stringify(data, null, 2)))
+}
+
 // getCustomers();
 // getCustomerById(5389784547526);
 // getProducts();
-getProductById(6785029996742);
+// getProductById(6785029996742);
 // getOrders();
 // getOrderById(3944970911942);
 
 
+let simpleOrder = {
+    "order": {
+        "line_items": [{
+            "variant_id": 40249421922502,
+            "quantity": 1
+        }]
+    }  
+};
 
+// createNewOrder(simpleOrder);
+
+let simpleCustomer = {
+    "customer": {
+        "first_name": "Jay",
+        "last_name": "Testerman",
+        "email": "jay.testerman@example.com",
+        "phone": "+18888888889",
+        "verified_email": true,
+        "addresses": [{
+            "address1": "123 Pine St",
+            "city": "Ottawa",
+            "province": "ON",
+            "phone": "555-1212",
+            "zip": "123 ABC",
+            "last_name": "Testerman",
+            "first_name": "Jay",
+            "country": "CA"
+        }]
+    }
+}
+
+createNewCustomer(simpleCustomer);
