@@ -71,7 +71,7 @@ describe("GET /customers", function () {
         expect(customer.last_name).to.eql("Smith");
         expect(customer.verified_email).to.eql(true);
     });
-  });
+});
 
 
 describe("POST /customers", function () {
@@ -130,4 +130,4 @@ describe("PUT /customers", function () {
         expect(customer.note).to.eql("Customer is suspected of placing fraudulent orders.");
     });
 
-  });
+});
